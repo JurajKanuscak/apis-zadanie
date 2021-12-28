@@ -20,7 +20,7 @@ database = sql.connect(
 
 cursor = database.cursor(dictionary=True)
 
-@app.route("/", methods=["GET"])
+@app.route("/book", methods=["GET"])
 def get_book():
   select = ddl_readline("ddl/Select.ddl", 1)
   cursor.execute(select)
