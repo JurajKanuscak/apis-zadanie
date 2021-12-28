@@ -1,37 +1,34 @@
-from flask import Flask
-from flask import request
-from flask import jsonify
+from flask import Flask, request, jsonify
 from flask_cors import CORS
-import mysql.connector as MYSQL
+import mysql.connector as sql
 
+def ddl_readline(file_name, line, values=[]):
+  if line < 1: raise IndexError()
+  with open(file_name) as file:
+    content = file.read().split('\n')
+    return content[line - 1].format(*values)
 
 app = Flask(__name__)
 CORS(app)
 
-ovocie = ["jablko","pomaranc","jahoda"]
+database = sql.connect(
+  host="147.232.40.14",
+  user="mu468fv",
+  password="SeuM4oa0",
+  database="mu468fv"
+)
 
-@app.route("/", methods=["GET"])
-def main():
-    return jsonify({"ovocie":ovocie}),200
+cursor = database.cursor(dictionary=True)
 
-@app.route("/vytvorit", methods=["POST"])
-def create():
-    data = request.get_json(force=True)
-    data_dict = dict(data)
-    ovocie.append(data_dict["vytvorit"])
-    return jsonify("created"),201
+@app.route("/book", methods=["GET"])
+def get_book():
+  select = ddl_readline("ddl/Select.ddl", 1)
+  cursor.execute(select)
+  book = cursor.fetchall()
+  return jsonify(book), 200
 
-@app.route("/upravit/<id>", methods=["PUT"])
-def update(id):
-    data = request.get_json(force=True)
-    data_dict = dict(data)
-    ovocie[int(id)] = data_dict["upravit"]
-    return jsonify("updated"),201
 
-@app.route("/vymazat/<id>", methods=["DELETE"])
-def delete(id):
-    del ovocie[int(id)]
-    return jsonify("deleted"),204
+
 
 if __name__ == "__main__":
-    app.run()
+  app.run()
