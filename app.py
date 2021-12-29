@@ -143,6 +143,17 @@ def get_order():
   order = cursor.fetchall()
   return jsonify(order), 200
 
+@app.route("/order", methods=["POST"])
+def post_order():
+  order = dict(request.get_json(force=True))
+  values = [order["idCustomer"], order["OrderDate"], order["Price"]]
+  insert = ddl_readline("ddl/Insert.ddl", 3, values)
+  cursor.execute(insert)
+  database.commit()
+  select = ddl_readline("ddl/Select.ddl", 10, values)
+  cursor.execute(select)
+  order = cursor.fetchall()[0]
+  return jsonify(order), 200
 
 @app.route("/order/<identificator>", methods=["PUT"])
 def put_order(identificator):
@@ -158,8 +169,6 @@ def delete_order(identificator):
   cursor.execute(delete)
   database.commit()
   return jsonify(f"Order with ID {identificator} has been deleted"), 204
-
-
 
 
 if __name__ == "__main__":
