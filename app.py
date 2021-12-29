@@ -18,7 +18,7 @@ database = sql.connect(
   database="mu468fv"
 )
 cursor = database.cursor(dictionary=True)
-
+#------------------------------------------------------------------------
 #AUTHOR https://apis-zadanie-eshop.herokuapp.com/author
 
 @app.route("/author", methods=["GET"])
@@ -26,6 +26,19 @@ def get_author():
   select = ddl_readline("ddl/Select.ddl", 1)
   cursor.execute(select)
   author = cursor.fetchall()
+  return jsonify(author), 200
+
+@app.route("/author", methods=["POST"])
+def post_author():
+  author = dict(request.get_json(force=True))
+  values = [author["AuthorName"]]
+  insert = ddl_readline("ddl/Insert.ddl", 1, values)
+  cursor.execute(insert)
+  database.commit()
+  values = [author["AuthorName"]]
+  select = ddl_readline("ddl/Select.ddl", 9, values)
+  cursor.execute(select)
+  author = cursor.fetchall()[0]
   return jsonify(author), 200
 
 @app.route("/author/<identificator>", methods=["PUT"])
@@ -44,9 +57,8 @@ def delete_author(identificator):
   return jsonify(f"Author with ID {identificator} has been deleted"), 204
 
 
-
-
-#BOOK https://apis-zadanie-eshop.herokuapp.com/author
+#------------------------------------------------------------------------
+#BOOK https://apis-zadanie-eshop.herokuapp.com/book
 
 @app.route("/book", methods=["GET"])
 def get_book():
