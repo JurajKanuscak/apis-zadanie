@@ -67,7 +67,10 @@ def get_book():
   book = cursor.fetchall()
   return jsonify(book), 200
 
-#category
+#------------------------------------------------------------------------
+#CATEGORY https://apis-zadanie-eshop.herokuapp.com/category
+
+
 @app.route("/category", methods=["GET"])
 def get_category():
   select = ddl_readline("ddl/Select.ddl", 3)
@@ -75,7 +78,9 @@ def get_category():
   category = cursor.fetchall()
   return jsonify(category), 200
 
-#customer
+#------------------------------------------------------------------------
+#CUSTOMER https://apis-zadanie-eshop.herokuapp.com/customer
+
 @app.route("/customer", methods=["GET"])
 def get_customer():
   select = ddl_readline("ddl/Select.ddl", 4)
@@ -83,13 +88,25 @@ def get_customer():
   customer = cursor.fetchall()
   return jsonify(customer), 200
 
-#order
+#------------------------------------------------------------------------
+#ORDER https://apis-zadanie-eshop.herokuapp.com/order
+
 @app.route("/order", methods=["GET"])
 def get_order():
   select = ddl_readline("ddl/Select.ddl", 5)
   cursor.execute(select)
   order = cursor.fetchall()
   return jsonify(order), 200
+
+
+#---------
+
+@app.route("/author_book", methods=["GET"])
+def get_author_book():
+  select = ddl_readline("ddl/Select.ddl", 6)
+  cursor.execute(select)
+  author_book = cursor.fetchall()
+  return jsonify(author_book), 200
 
 
 
