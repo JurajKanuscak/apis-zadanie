@@ -67,6 +67,21 @@ def get_book():
   book = cursor.fetchall()
   return jsonify(book), 200
 
+@app.route("/book/<identificator>", methods=["PUT"])
+def put_book(identificator):
+  book = dict(request.get_json(force=True))
+  update = ddl_readline("ddl/Update.ddl", 2, [book["idCategory"], book["Title"], book["ISBN"], book["Year"], book["Price"], book["Pages"], book["BookDesc"], book["BookLink"], book["idBook"]])
+  cursor.execute(update)
+  database.commit()
+  return jsonify(f"Product with ID {identificator} has been updated"), 201
+
+@app.route("/book/<identificator>", methods=["DELETE"])
+def delete_book(identificator):
+  delete = ddl_readline("ddl/Delete.ddl", 2, [identificator])
+  cursor.execute(delete)
+  database.commit()
+  return jsonify(f"Book with ID {identificator} has been deleted"), 204
+
 #------------------------------------------------------------------------
 #CATEGORY https://apis-zadanie-eshop.herokuapp.com/category
 
@@ -78,6 +93,21 @@ def get_category():
   category = cursor.fetchall()
   return jsonify(category), 200
 
+@app.route("/category/<identificator>", methods=["PUT"])
+def put_category(identificator):
+  category = dict(request.get_json(force=True))
+  update = ddl_readline("ddl/Update.ddl", 3, [category["CategoryDesc"], category["idCategory"]])
+  cursor.execute(update)
+  database.commit()
+  return jsonify(f"Category with ID {identificator} has been updated"), 201
+
+@app.route("/category/<identificator>", methods=["DELETE"])
+def delete_category(identificator):
+  delete = ddl_readline("ddl/Delete.ddl", 3, [identificator])
+  cursor.execute(delete)
+  database.commit()
+  return jsonify(f"Category with ID {identificator} has been deleted"), 204
+
 #------------------------------------------------------------------------
 #CUSTOMER https://apis-zadanie-eshop.herokuapp.com/customer
 
@@ -87,6 +117,21 @@ def get_customer():
   cursor.execute(select)
   customer = cursor.fetchall()
   return jsonify(customer), 200
+
+@app.route("/customer/<identificator>", methods=["PUT"])
+def put_customer(identificator):
+  customer = dict(request.get_json(force=True))
+  update = ddl_readline("ddl/Update.ddl", 4, [customer["Name"], customer["Surname"], customer["City"], customer["State"], customer["ZipCode"], customer["idCustomer"]])
+  cursor.execute(update)
+  database.commit()
+  return jsonify(f"Customer with ID {identificator} has been updated"), 201
+
+@app.route("/customer/<identificator>", methods=["DELETE"])
+def delete_customer(identificator):
+  delete = ddl_readline("ddl/Delete.ddl", 4, [identificator])
+  cursor.execute(delete)
+  database.commit()
+  return jsonify(f"Customer with ID {identificator} has been deleted"), 204
 
 #------------------------------------------------------------------------
 #ORDER https://apis-zadanie-eshop.herokuapp.com/order
@@ -98,7 +143,20 @@ def get_order():
   order = cursor.fetchall()
   return jsonify(order), 200
 
+@app.route("/order/<identificator>", methods=["PUT"])
+def put_order(identificator):
+  order = dict(request.get_json(force=True))
+  update = ddl_readline("ddl/Update.ddl", 5, [order["idCustomer"], customer["OrderDate"], customer["Price"], customer["idOrder"]])
+  cursor.execute(update)
+  database.commit()
+  return jsonify(f"Order with ID {identificator} has been updated"), 201
 
+@app.route("/order/<identificator>", methods=["DELETE"])
+def delete_order(identificator):
+  delete = ddl_readline("ddl/Delete.ddl", 5, [identificator])
+  cursor.execute(delete)
+  database.commit()
+  return jsonify(f"Order with ID {identificator} has been deleted"), 204
 
 
 
