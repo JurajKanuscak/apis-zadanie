@@ -7,3 +7,4 @@ SELECT Orders.idOrder, OrderDate, Orders.Price, Title FROM Orders
   JOIN Book_Order ON (Orders.idOrder = Book_Order.idOrder)
   JOIN Book ON (Book_Order.idBook = Book.idBook);
 SELECT * FROM Author WHERE AuthorName="{}";
+SELECT * FROM Orders WHERE idCustomer={} AND OrderDate="{}" AND Price="{}";
