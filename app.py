@@ -20,12 +20,24 @@ database = sql.connect(
 
 cursor = database.cursor(dictionary=True)
 
+
+#author
 @app.route("/author", methods=["GET"])
 def get_author():
   select = ddl_readline("ddl/Select.ddl", 1)
   cursor.execute(select)
   author = cursor.fetchall()
   return jsonify(author), 200
+
+@app.route("/author/<identificator>", methods=["PUT"])
+def put_author(identificator):
+  author = dict(request.get_json(force=True))
+  update = ddl_readline("ddl/Update.ddl", 1, [author["AuthorName"], author["idAuthor"]])
+  cursor.execute(update)
+  database.commit()
+  return jsonify(f"Author with ID {identificator} has been updated"), 201
+
+
 
 @app.route("/book", methods=["GET"])
 def get_book():
