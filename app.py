@@ -17,11 +17,10 @@ database = sql.connect(
   password="SeuM4oa0",
   database="mu468fv"
 )
-
 cursor = database.cursor(dictionary=True)
 
+#AUTHOR https://apis-zadanie-eshop.herokuapp.com/author
 
-#author
 @app.route("/author", methods=["GET"])
 def get_author():
   select = ddl_readline("ddl/Select.ddl", 1)
@@ -37,7 +36,17 @@ def put_author(identificator):
   database.commit()
   return jsonify(f"Author with ID {identificator} has been updated"), 201
 
+@app.route("/author/<identificator>", methods=["DELETE"])
+def delete_author(identificator):
+  delete = ddl_readline("ddl/Delete.ddl", 1, [identificator])
+  cursor.execute(delete)
+  database.commit()
+  return jsonify(f"Author with ID {identificator} has been deleted"), 204
 
+
+
+
+#BOOK https://apis-zadanie-eshop.herokuapp.com/author
 
 @app.route("/book", methods=["GET"])
 def get_book():
@@ -46,6 +55,7 @@ def get_book():
   book = cursor.fetchall()
   return jsonify(book), 200
 
+#category
 @app.route("/category", methods=["GET"])
 def get_category():
   select = ddl_readline("ddl/Select.ddl", 3)
@@ -53,6 +63,7 @@ def get_category():
   category = cursor.fetchall()
   return jsonify(category), 200
 
+#customer
 @app.route("/customer", methods=["GET"])
 def get_customer():
   select = ddl_readline("ddl/Select.ddl", 4)
@@ -60,6 +71,7 @@ def get_customer():
   customer = cursor.fetchall()
   return jsonify(customer), 200
 
+#order
 @app.route("/order", methods=["GET"])
 def get_order():
   select = ddl_readline("ddl/Select.ddl", 5)
