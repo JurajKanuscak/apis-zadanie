@@ -99,15 +99,6 @@ def get_order():
   return jsonify(order), 200
 
 
-#---------
-
-@app.route("/author_book", methods=["GET"])
-def get_author_book():
-  select = ddl_readline("ddl/Select.ddl", 6)
-  cursor.execute(select)
-  author_book = cursor.fetchall()
-  return jsonify(author_book), 200
-
 
 
 
