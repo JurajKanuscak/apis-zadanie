@@ -20,12 +20,41 @@ database = sql.connect(
 
 cursor = database.cursor(dictionary=True)
 
+@app.route("/author", methods=["GET"])
+def get_author():
+  select = ddl_readline("ddl/Select.ddl", 1)
+  cursor.execute(select)
+  author = cursor.fetchall()
+  return jsonify(author), 200
+
 @app.route("/book", methods=["GET"])
 def get_book():
-  select = ddl_readline("ddl/Select.ddl", 1)
+  select = ddl_readline("ddl/Select.ddl", 2)
   cursor.execute(select)
   book = cursor.fetchall()
   return jsonify(book), 200
+
+@app.route("/category", methods=["GET"])
+def get_category():
+  select = ddl_readline("ddl/Select.ddl", 3)
+  cursor.execute(select)
+  category = cursor.fetchall()
+  return jsonify(category), 200
+
+@app.route("/customer", methods=["GET"])
+def get_customer():
+  select = ddl_readline("ddl/Select.ddl", 4)
+  cursor.execute(select)
+  customer = cursor.fetchall()
+  return jsonify(customer), 200
+
+@app.route("/order", methods=["GET"])
+def get_order():
+  select = ddl_readline("ddl/Select.ddl", 5)
+  cursor.execute(select)
+  order = cursor.fetchall()
+  return jsonify(order), 200
+
 
 
 
