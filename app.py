@@ -143,6 +143,7 @@ def get_order():
   order = cursor.fetchall()
   return jsonify(order), 200
 
+
 @app.route("/order/<identificator>", methods=["PUT"])
 def put_order(identificator):
   order = dict(request.get_json(force=True))
