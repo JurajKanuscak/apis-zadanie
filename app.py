@@ -150,7 +150,7 @@ def post_order():
   insert = ddl_readline("ddl/Insert.ddl", 5, values)
   cursor.execute(insert)
   database.commit()
-  select = ddl_readline("ddl/Select.ddl", 5, values)
+  select = ddl_readline("ddl/Select.ddl", 7, values)
   cursor.execute(select)
   order = cursor.fetchall()[0]
   return jsonify(order), 200
