@@ -1,8 +1,5 @@
 SELECT * FROM Author;
-SELECT Title, ISBN, Year, Price, Pages, BookDesc, BookLink, AuthorName, CategoryDesc FROM Book
-  JOIN Author_Book ON (Book.idBook = Author_Book.idBook)
-  JOIN Author ON (Author_Book.idAuthor = Author.idAuthor)
-  JOIN Category ON (Book.idCategory = Category.idCategory);
+SELECT Title, ISBN, Year, Price, Pages, BookDesc, BookLink, AuthorName, CategoryDesc FROM Book JOIN Author_Book ON (Book.idBook = Author_Book.idBook) JOIN Author ON (Author_Book.idAuthor = Author.idAuthor) JOIN Category ON (Book.idCategory = Category.idCategory);
 SELECT * FROM Category;
 SELECT * FROM Customer;
 SELECT Orders.idOrder, OrderDate, Orders.Price, Title FROM Orders
