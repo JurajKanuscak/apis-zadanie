@@ -3,3 +3,4 @@ SELECT Title, ISBN, Year, Price, Pages, BookDesc, BookLink, AuthorName, Category
 SELECT * FROM Category;
 SELECT * FROM Customer;
 SELECT Orders.idOrder, OrderDate, Orders.Price, Title FROM Orders JOIN Book_Order ON (Orders.idOrder = Book_Order.idOrder) JOIN Book ON (Book_Order.idBook = Book.idBook);
+SELECT * FROM Orders WHERE idCustomer={} AND OrderDate="{}" AND Price="{}";
