@@ -147,7 +147,7 @@ def get_order():
 def post_order():
   order = dict(request.get_json(force=True))
   values = [order["idCustomer"], order["OrderDate"], order["Price"]]
-  insert = ddl_readline("ddl/Insert.ddl", 3, values)
+  insert = ddl_readline("ddl/Insert.ddl", 5, values)
   cursor.execute(insert)
   database.commit()
   select = ddl_readline("ddl/Select.ddl", 5, values)
