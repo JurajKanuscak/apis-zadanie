@@ -36,7 +36,7 @@ def post_author():
   cursor.execute(insert)
   database.commit()
   values = [author["AuthorName"]]
-  select = ddl_readline("ddl/Select.ddl", 9, values)
+  select = ddl_readline("ddl/Select.ddl", 1, values)
   cursor.execute(select)
   author = cursor.fetchall()[0]
   return jsonify(author), 200
@@ -158,7 +158,7 @@ def post_order():
 @app.route("/order/<identificator>", methods=["PUT"])
 def put_order(identificator):
   order = dict(request.get_json(force=True))
-  update = ddl_readline("ddl/Update.ddl", 5, [order["idCustomer"], customer["OrderDate"], customer["Price"], customer["idOrder"]])
+  update = ddl_readline("ddl/Update.ddl", 5, [order["idCustomer"], order["OrderDate"], order["Price"], order["idOrder"]])
   cursor.execute(update)
   database.commit()
   return jsonify(f"Order with ID {identificator} has been updated"), 201
